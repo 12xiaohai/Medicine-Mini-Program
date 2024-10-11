@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有医生信息</title>
+</head>
+<body>
+    <h1>所有医生</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>医生编号</th>
+                <th>姓名</th>
+                <th>职称</th>
+                <th>联系电话</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for doctor in doctors %}
+            <tr>
+                <td>{{ doctor.doctorNumber }}</td>
+                <td>{{ doctor.name }}</td>
+                <td>{{ doctor.zhicheng }}</td>
+                <td>{{ doctor.telphone }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

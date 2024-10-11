@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>医生信息查询</title>
+    <!-- 引入静态资源 -->
+    <link href="{% static 'plugins/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/bootstrap-dashen.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/font-awesome.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/animate.css' %}" rel="stylesheet">
+</head>
+<body style="margin-top:70px;">
+<div class="container">
+    <!-- 页面头部 -->
+    {% include 'header.html' %}
+    
+    <div class="row">
+        <div class="col-md-3 wow fadeInLeft">
+            <div class="page-header">
+                <h1>医生信息查询</h1>
+            </div>
+            <form name="doctorQueryForm" id="doctorQueryForm" action="{% url 'Doctor:frontList' %}" class="mar_t15" method="get">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="doctorNumber">医生编号:</label>
+                    <input type="text" id="doctorNumber" name="doctorNumber" value="{{ doctorNumber }}" class="form-control" placeholder="请输入医生编号">
+                </div>
+                <div class="form-group">
+                    <label for="name">姓名:</label>
+                    <input type="text" id="name" name="name" value="{{ name }}" class="form-control" placeholder="请输入医生姓名">
+                </div>
+                <div class="form-group">
+                    <label for="sex">性别:</label>
+                    <select id="sex" name="sex" class="form-control">
+                        <option value="">请选择性别</option>
+                        <option value="男" {% if sex == '男' %}selected{% endif %}>男</option>
+                        <option value="女" {% if sex == '女' %}selected{% endif %}>女</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="zhicheng">职称:</label>
+                    <input type="text" id="zhicheng" name="zhicheng" value="{{ zhicheng }}" class="form-control" placeholder="请输入医生职称">
+                </div>
+                <div class="form-group">
+                    <label for="departmentObj">科室:</label>
+                    <select id="departmentObj" name="departmentObj" class="form-control">
+                        <option value="">请选择科室</option>
+                        {% for department in departments %}
+                            <option value="{{ department.departmentNo }}" {% if departmentObj == department.departmentNo %}selected{% endif %}>{{ department.departmentName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="schoolRecordObj">学历:</label>
+                    <select id="schoolRecordObj" name="schoolRecordObj" class="form-control">
+                        <option value="">请选择学历</option>
+                        {% for schoolRecord in schoolRecords %}
+                            <option value="{{ schoolRecord.schoolRecordId }}" {% if schoolRecordObj == schoolRecord.schoolRecordId %}selected{% endif %}>{{ schoolRecord.schoolRecordName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">查询</button>
+            </form>
+        </div>
+
+        <div class="col-md-9 wow fadeInDown" data-wow-duration="0.5s">
+            <div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li><a href="{% url 'Index:index' %}">首页</a></li>
+                    <li role="presentation" class="active"><a href="#doctorListPanel" aria-controls="doctorListPanel" role="tab" data-toggle="tab">医生信息列表</a></li>
+                    <li role="presentation"><a href="{% url 'Doctor:frontAdd' %}" style="display:none;">添加医生信息</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="doctorListPanel">
+                        <div class="row">
+                            <div class="col-md-12 top5">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover">
+                                        <tr class="success bold">
+                                            <td>医生编号</td>
+                                            <td>姓名</td>
+                                            <td>性别</td>
+                                            <td>年龄</td>
+                                            <td>科室</td>
+                                            <td>职称</td>
+                                            <td>学历</td>
+                                            <td>联系电话</td>
+                                            <td>照片</td>
+                                            <td>操作</td>
+                                        </tr>
+                                        {% for doctor in doctors %}
+                                        <tr>
+                                            <td>{{ doctor.doctorNumber }}</td>
+                                            <td>{{ doctor.name }}</td>
+                                            <td>{{ doctor.sex }}</td>
+                                            <td>{{ doctor.age }}</td>
+                                            <td>{{ doctor.departmentObj.departmentName }}</td>
+                                            <td>{{ doctor.zhicheng }}</td>
+                                            <td>{{ doctor.schoolRecordObj.schoolRecordName }}</td>
+                                            <td>{{ doctor.telphone }}</td>
+                                            <td><img src="{{ doctor.doctorPhoto.url }}" width="50px" height="50px"></td>
+                                            <td>
+                                                <a href="{% url 'Doctor:frontShow' doctor.doctorNumber %}"><i class="fa fa-info"></i>&nbsp;查看</a>&nbsp;
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav class="pull-left">
+                                    <ul class="pagination">
+                                        <li><a href="#" onclick="GoToPage({{ currentPage|add:-1 }},{{ totalPage }});" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                                        {% for page in pageList %}
+                                            {% if currentPage == page %}
+                                                <li class="active"><a href="#"  onclick="GoToPage({{ page }},{{ totalPage }});">{{ page }}</a></li>
+                                            {% else %}
+                                                <li><a href="#"  onclick="GoToPage({{ page }},{{ totalPage }});">{{ page }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <li><a href="#" onclick="GoToPage({{ currentPage|add:1 }},{{ totalPage }});"><span aria-hidden="true">&raquo;</span></a></li>
+                                    </ul>
+                                </nav>
+                                <div class="pull-right" style="line-height:75px;">
+                                    共有{{ recordNumber }}条记录，当前第{{ currentPage }}/{{ totalPage }} 页
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+<!-- 引入JS文件 -->
+<script src="{% static 'plugins/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap.js' %}"></script>
+<script src="{% static 'plugins/wow.min.js' %}"></script>
+<script>
+    // 分页跳转函数
+    function GoToPage(currentPage, totalPage) {
+        if (currentPage == 0 || currentPage > totalPage) return;
+        document.doctorQueryForm.currentPage.value = currentPage;
+        document.doctorQueryForm.submit();
+    }
+
+    $(function(){
+        /* 小屏幕导航点击关闭菜单 */
+        $('.navbar-collapse a').click(function(){
+            $('.navbar-collapse').collapse('hide');
+        });
+        new WOW().init();
+    });
+</script>
+</body>
+</html>

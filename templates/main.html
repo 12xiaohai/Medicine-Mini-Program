@@ -1,0 +1,49 @@
+{% include 'check_logstate.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>信息管理系统</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'easyui/themes/default/easyui.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'easyui/themes/icon.css' %}" />
+    <!-- 确保CSS文件路径正确 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}" />
+</head>
+<body class="easyui-layout">
+
+    <!-- 顶部导航栏 -->
+    <div data-options="region:'north',title:'header',split:true,noheader:true" class="region-north">
+        <div class="logo">中医药馆后台管理系统</div>
+        <div class="logout">您好，{{ request.session.username }} | <a href="{% url 'Index:loginout' %}">退出</a></div>
+    </div>
+
+    <!-- 底部区域 -->
+    <div data-options="region:'south',title:'footer',split:true,noheader:true" class="region-south">
+        <!-- 你可以在这里添加页脚内容 -->
+    </div>
+
+    <!-- 左侧导航栏 -->
+    <div data-options="region:'west',title:'导航',split:true,iconCls:'icon-world'" class="region-west">
+        <ul id="nav"></ul>
+    </div>
+
+    <!-- 内容区域 -->
+    <div data-options="region:'center'" class="region-center" style="overflow:hidden;">
+        <div id="tabs">
+            <div title="起始页" iconCls="icon-house" style="padding:0 10px;">
+                <br/><br/>
+                <div style="text-align: center; font-size: 24px;">欢迎来到后台管理系统！</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入JS资源 -->
+    <script type="text/javascript" src="{% static 'easyui/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'easyui/jquery.easyui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'easyui/locale/easyui-lang-zh_CN.js' %}"></script>
+    <script src="{% static 'tiny_mce/tiny_mce.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/admin.js' %}"></script>
+
+</body>
+</html>

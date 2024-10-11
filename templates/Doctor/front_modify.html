@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改医生信息</title>
+</head>
+<body>
+    <h1>修改医生信息</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>医生编号:</label>
+        <input type="text" name="doctorNumber" value="{{ doctor.doctorNumber }}" readonly><br>
+
+        <label>姓名:</label>
+        <input type="text" name="name" value="{{ doctor.name }}"><br>
+
+        <label>性别:</label>
+        <select name="sex">
+            <option value="男" {% if doctor.sex == '男' %}selected{% endif %}>男</option>
+            <option value="女" {% if doctor.sex == '女' %}selected{% endif %}>女</option>
+        </select><br>
+
+        <label>年龄:</label>
+        <input type="number" name="age" value="{{ doctor.age }}"><br>
+
+        <label>医生照片:</label>
+        <input type="file" name="doctorPhoto"><br>
+        <img src="{{ doctor.doctorPhoto }}" alt="医生照片" width="100"><br>
+
+        <label>联系电话:</label>
+        <input type="text" name="telphone" value="{{ doctor.telphone }}"><br>
+
+        <label>职称:</label>
+        <input type="text" name="zhicheng" value="{{ doctor.zhicheng }}"><br>
+
+        <label>入院日期:</label>
+        <input type="date" name="inDate" value="{{ doctor.inDate }}"><br>
+
+        <label>医生介绍:</label>
+        <textarea name="doctorDesc">{{ doctor.doctorDesc }}</textarea><br>
+
+        <button type="submit">更新</button>
+    </form>
+</body>
+</html>
