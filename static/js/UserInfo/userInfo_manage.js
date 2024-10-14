@@ -3,7 +3,7 @@ $(function () {
 	initUserInfoManageTool(); //建立UserInfo管理对象
 	userInfo_manage_tool.init(); //如果需要通过下拉框查询，首先初始化下拉框的值
 	$("#userInfo_manage").datagrid({
-		url : '/UserInfo/list',
+		url : '/UserInfo/list/',
 		queryParams: {
 			"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 		},

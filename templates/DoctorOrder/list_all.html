@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Orders</title>
+</head>
+<body>
+    <h1>所有订单列表</h1>
+    <table border="1">
+        <tr>
+            <th>订单编号</th>
+            <th>医生姓名</th>
+            <th>病人姓名</th>
+            <th>订单时间</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.order_no }}</td>
+            <td>{{ order.doctor_name }}</td>
+            <td>{{ order.patient_name }}</td>
+            <td>{{ order.order_date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">暂无订单</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

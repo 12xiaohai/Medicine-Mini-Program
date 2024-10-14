@@ -3,7 +3,7 @@ $(function () {
 	initDepartmentManageTool(); //建立Department管理对象
 	department_manage_tool.init(); //如果需要通过下拉框查询，首先初始化下拉框的值
 	$("#department_manage").datagrid({
-		url : '/Department/list',
+		url : '/Department/list/',
 		queryParams: {
 			"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 		},

@@ -68,7 +68,7 @@ ROOT_URLCONF = 'PythonProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]  # 将项目的根目录 BASE_DIR 与 'templates' 文件夹名拼接起来，生成一个完整的路径，指向项目中的 templates 文件夹。
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -125,15 +125,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = 'zh-hans'   # 语言
 
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = 'Asia/Shanghai' # 时区
 
-USE_I18N = True
+USE_I18N = True  # 语言
 
-USE_L10N = True
+USE_L10N = True # 数据和时间格式
 
-USE_TZ = True
+USE_TZ = True   # 启用时区
 
 
 # Static files (CSS, JavaScript, Images)

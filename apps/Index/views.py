@@ -25,16 +25,20 @@ class FrontLoginView(APIView):
         password = request.POST.get('password')
 
         try:
+            # 根据用户名查询用户
             user = UserInfo.objects.get(user_name=username)
-            # 验证密码
-            if check_password(password, user.password):
-                request.session['user_name'] = username  # 存储用户名到 session
+
+            # 明文比较输入的密码和数据库中的密码
+            if password == user.password:
+                # 登录成功，将用户名存入 session
+                request.session['user_name'] = username  
                 data = {'msg': '登录成功', 'success': True}
             else:
                 data = {'msg': '登录失败：密码错误', 'success': False}
         except UserInfo.DoesNotExist:
             data = {'msg': '登录失败：用户不存在', 'success': False}
 
+        # 返回 JSON 响应
         return HttpResponse(dumps(data, ensure_ascii=False))
 
 
