@@ -3,7 +3,7 @@ $(function () {
 	initLeavewordManageTool(); //建立Leaveword管理对象
 	leaveword_manage_tool.init(); //如果需要通过下拉框查询，首先初始化下拉框的值
 	$("#leaveword_manage").datagrid({
-		url : '/Leaveword/list',
+		url : '/Leaveword/list/',
 		queryParams: {
 			"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 		},
@@ -115,7 +115,7 @@ function initLeavewordManageTool() {
 	leaveword_manage_tool = {
 		init: function() {
 			$.ajax({
-				url : "/UserInfo/listAll",
+				url : "/UserInfo/listAll/",
 				data: {
 					"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 				},
@@ -165,7 +165,7 @@ function initLeavewordManageTool() {
 						}
 						$.ajax({
 							type : "POST",
-							url : "/Leaveword/deletes",
+							url : "/Leaveword/deletes/",
 							data : {
 								leaveWordIds : leaveWordIds.join(","),
 								"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()

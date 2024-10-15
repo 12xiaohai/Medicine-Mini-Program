@@ -40,7 +40,7 @@ urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),  # 这部分很重要
     re_path(r'^UserInfo/', include('apps.UserInfo.urls', namespace='UserInfo')),  # 用户信息模块
     re_path(r'^Department/', include('apps.Department.urls', namespace='Department')),  # 科室信息模块
-    re_path(r'^Doctor/', include('apps.Doctor.urls', namespace='Doctor')),  # 医生信息模块
+    re_path(r'^Doctor/', include('apps.Doctor.urls', namespace='Doctor')),  # 医生信息模块  
     re_path(r'^SchoolRecord/', include('apps.SchoolRecord.urls', namespace='SchoolRecord')),  # 学历信息模块
     re_path(r'^DoctorOrder/', include('apps.DoctorOrder.urls', namespace='DoctorOrder')),  # 医生预约模块
     re_path(r'^Leaveword/', include('apps.Leaveword.urls', namespace='Leaveword')),  # 留言模块

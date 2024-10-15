@@ -3,7 +3,7 @@ $(function () {
 	initPatientManageTool(); //建立Patient管理对象
 	patient_manage_tool.init(); //如果需要通过下拉框查询，首先初始化下拉框的值
 	$("#patient_manage").datagrid({
-		url : '/Patient/list',
+		url : '/Patient/list/',
 		queryParams: {
 			"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 		},

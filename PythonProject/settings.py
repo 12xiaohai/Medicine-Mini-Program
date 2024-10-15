@@ -68,8 +68,7 @@ ROOT_URLCONF = 'PythonProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]  # 将项目的根目录 BASE_DIR 与 'templates' 文件夹名拼接起来，生成一个完整的路径，指向项目中的 templates 文件夹。
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # 将项目的根目录 BASE_DIR 与 'templates' 文件夹名拼接起来，生成一个完整的路径，指向项目中的 templates 文件夹。
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

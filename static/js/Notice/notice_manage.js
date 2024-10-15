@@ -3,7 +3,7 @@ $(function () {
 	initNoticeManageTool(); //建立Notice管理对象
 	notice_manage_tool.init(); //如果需要通过下拉框查询，首先初始化下拉框的值
 	$("#notice_manage").datagrid({
-		url : '/Notice/list',
+		url : '/Notice/list/',
 		queryParams: {
 			"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 		},
