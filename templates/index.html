@@ -1,137 +1,140 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
-  <title>精品项目设计-首页</title>
-  <link href="{% static 'plugins/bootstrap.css' %}" rel="stylesheet">
-  <link href="{% static 'plugins/font-awesome.css' %}" rel="stylesheet">
-  <link href="{% static 'plugins/bootstrap-dashen.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息管理系统_用户登录</title>
+    <!-- 引入静态资源 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+    <style>
+        /* 添加简单的样式使页面符合您的需求 */
+        body {
+            background: url("{% static 'images/background-image.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .login-container .form-control {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .login-container button {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .login-container button:hover {
+            background-color: #218838;
+        }
+
+        #saveid {
+            margin-right: 5px;
+        }
+
+        /* 提示消息样式 */
+        .messager-progress {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-{% include 'header.html' %}
- <!-- 广告轮播开始 -->
-  <section id="main_ad" class="carousel slide" data-ride="carousel">
-    <!-- 下面的小点点，活动指示器 -->
-    <ol class="carousel-indicators">
-      <li data-target="#main_ad" data-slide-to="0" class="active"></li>
-      <li data-target="#main_ad" data-slide-to="1"></li>
-      <li data-target="#main_ad" data-slide-to="2"></li>
-    </ol>
-    <!-- 轮播项 -->
-    <div class="carousel-inner" role="listbox">
-      <div class="item active" data-image-lg="{% static 'images/slider/image1.jpg' %}"></div>
-      <div class="item" data-image-lg="{% static 'images/slider/image2.jpg' %}" ></div>
-      <div class="item" data-image-lg="{% static 'images/slider/image3.jpg' %}" ></div>
-    </div>
-    <!-- 控制按钮 -->
-    <a class="left carousel-control" href="#main_ad" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">上一页</span>
-    </a>
-    <a class="right carousel-control" href="#main_ad" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">下一页</span>
-    </a>
-  </section>
-  <!-- /广告轮播结束 -->
 
-
-<!-- 特色介绍开始 -->
-  <section id="tese">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-6 col-md-4">
-          <a href="#">
-            <div class="media">
-              <div class="media-left">
-                <i class="icon-uniE907"></i>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">精品设计制作</h4>
-                <p>此设计已经通过了精心调试</p>
-              </div>
-            </div>
-          </a>
+<div class="login-container">
+    <h2>登录信息管理系统</h2>
+    <!-- 表单元素开始 -->
+    <form id="loginForm" method="post" data-login-url="{% url 'Index:login' %}" data-main-url="{% url 'Index:main' %}" data-doctor-url="{% url 'Index:doctorMain' %}">
+        {% csrf_token %}
+        <input type="text" id="manager" class="form-control" placeholder="请输入账号" required>
+        <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
+        <select name="identify" id="identify" class="form-control">
+            <option value="doctor">医生</option>
+            <option value="admin">超级管理员</option>
+        </select>
+        <div style="text-align: left; margin-top: 10px;">
+            <input id="saveid" type="checkbox" onclick="savePaw();"> 记住账号
         </div>
-        <div class="col-xs-6 col-md-4">
-          <a href="#">
-            <div class="media">
-              <div class="media-left">
-                <i class="icon-uniE907"></i>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">精品设计制作</h4>
-                <p>此设计已经通过了精心调试</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-4">
-          <a href="#">
-            <div class="media">
-              <div class="media-left">
-                <i class="icon-uniE907"></i>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">精品设计制作</h4>
-                <p>此设计已经通过了精心调试</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-4">
-          <a href="#">
-            <div class="media">
-              <div class="media-left">
-                <i class="icon-uniE907"></i>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">精品设计制作</h4>
-                <p>此设计已经通过了精心调试</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-4">
-          <a href="#">
-            <div class="media">
-              <div class="media-left">
-                <i class="icon-uniE907"></i>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">精品设计制作</h4>
-                <p>此设计已经通过了精心调试</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-4">
-          <a href="#">
-            <div class="media">
-              <div class="media-left">
-                <i class="icon-uniE907"></i>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">精品设计制作</h4>
-                <p>此设计已经通过了精心调试</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /特色介绍 结束-->
-
-{% include 'footer.html' %}
-
+        <button type="button" onclick="submitForm()">登录</button>
+    </form>
+    <!-- 表单元素结束 -->
 </div>
-<script src="{% static 'plugins/jquery.min.js' %}"></script>
-<script src="{% static 'plugins/bootstrap.js' %}"></script>
-<script src="{% static 'js/index.js' %}"></script>
+
+<!-- 引入JS文件 -->
+<script type="text/javascript" src="{% static 'easyui/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/login.js' %}"></script>
+
+<script type="text/javascript">
+// 提交表单的函数
+function submitForm() {
+    var loginUrl = $('#loginForm').data('login-url');
+    var mainUrl = $('#loginForm').data('main-url');
+    var doctorMainUrl = $('#loginForm').data('doctor-url');
+
+    var csrf = $('input[name="csrfmiddlewaretoken"]').val(); // 获取CSRF token
+    $.ajax({
+        url: loginUrl, // 动态生成登录 URL
+        type: 'post',
+        data: {
+            "username": $('#manager').val(),
+            "password": $('#password').val(),
+            "identify": $('#identify').val(),
+            "csrfmiddlewaretoken": csrf
+        },
+        dataType: "json",
+        beforeSend: function () {
+            // 在登录时显示加载进度
+            $.messager.progress({
+                text: '正在登录中...',
+            });
+        },
+        success: function (data) {
+            console.log(data);  // 打印返回数据
+            if (data.success) {
+                saveCookie(); // 保存 Cookie
+                if ($('#identify').val() == "admin") {
+                    location.href = mainUrl; // 跳转到后台主页
+                } else {
+                    location.href = doctorMainUrl; // 跳转到医生主页
+                }
+            } else {
+                $.messager.alert('登录失败！', data.msg, 'warning', function () {
+                    $('#password').select();
+                });
+            }
+        },
+        error: function() {
+            $.messager.alert('错误', '请求失败，请重试！', 'error');
+        }
+    });
+}
+</script>
+
 </body>
 </html>
