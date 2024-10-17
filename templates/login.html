@@ -3,37 +3,43 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>信息管理系统_用户登录</title>
+    <title>中医药小程序后台登陆</title>
 
     <!-- 引入静态资源 -->
     <link rel="stylesheet" type="text/css" href="{% static 'easyui/themes/default/easyui.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'easyui/themes/icon.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" /> <!-- 确保 CSS 文件的引用 -->
 </head>
 <body>
 
-<!-- 表单元素开始 -->
-<form id="loginForm" method="post" data-login-url="{% url 'Index:login' %}" data-main-url="{% url 'Index:main' %}" data-doctor-url="{% url 'Index:doctorMain' %}">
-    {% csrf_token %}
-    <div id="login">
-        <p>登录帐号：<input type="text" id="manager" class="textbox" required></p>
-        <p>登录密码：<input type="password" id="password" class="textbox" required></p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;身份：
-            <select name="identify" id="identify">
-                <option value="doctor">医生</option>
-                <option value="admin">超级管理员</option>
-            </select>
-        </p>
-        <p>
-            <font color="#999">记住账号</font>
-            <input id="saveid" type="checkbox" onclick="savePaw();" />
-        </p>
+<!-- 添加外部容器，用于包含图片和表单 -->
+<div class="login-container">
+    
+    <!-- 表单部分 -->
+    <div class="form-side">
+        <form id="loginForm" method="post" data-login-url="{% url 'Index:login' %}" data-main-url="{% url 'Index:main' %}" data-doctor-url="{% url 'Index:doctorMain' %}">
+            {% csrf_token %}
+            <h2>欢迎登录医院预约挂号系统</h2> <!-- 添加标题 -->
+            <p>登录帐号：<input type="text" id="manager" class="textbox" required></p>
+            <p>登录密码：<input type="password" id="password" class="textbox" required></p>
+            <p>身份：
+                <select name="identify" id="identify">
+                    <option value="doctor">医生</option>
+                    <option value="admin">超级管理员</option>
+                </select>
+            </p>
+            <p>
+                <label>
+                    <input id="saveid" type="checkbox" onclick="savePaw();" />
+                    记住账号
+                </label>
+            </p>
+            <div id="btn">
+                <a href="#" class="easyui-linkbutton" onclick="submitForm()">登录</a>
+            </div>
+        </form>
     </div>
-    <div id="btn">
-        <a href="#" class="easyui-linkbutton" onclick="submitForm()">登录</a>
-    </div>
-</form>
-<!-- 表单元素结束 -->
+</div>
 
 <!-- 引入JS文件 -->
 <script type="text/javascript" src="{% static 'easyui/jquery.min.js' %}"></script>
@@ -41,57 +47,6 @@
 <script type="text/javascript" src="{% static 'easyui/locale/easyui-lang-zh_CN.js' %}"></script>
 <script type="text/javascript" src="{% static 'easyui/jquery.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
-
-<script type="text/javascript">
-// 提交表单的函数
-function submitForm() {
-    var loginUrl = $('#loginForm').data('login-url');
-    var mainUrl = $('#loginForm').data('main-url');
-    var doctorMainUrl = $('#loginForm').data('doctor-url');
-
-    if (!$('#manager').validatebox('isValid')) {
-        $('#manager').focus();
-    } else if (!$('#password').validatebox('isValid')) {
-        $('#password').focus();
-    } else {
-        var csrf = $('input[name="csrfmiddlewaretoken"]').val(); // 获取CSRF token
-        $.ajax({
-            url: loginUrl, // 动态生成登录 URL
-            type: 'post',
-            data: {
-                "username": $('#manager').val(),
-                "password": $('#password').val(),
-                "identify": $('#identify').val(),
-                "csrfmiddlewaretoken": csrf
-            },
-            dataType: "json",
-            beforeSend: function () {
-                $.messager.progress({
-                    text: '正在登录中...',
-                });
-            },
-            success: function (data) {
-                console.log(data);  // 打印返回数据
-                if (data.success) {
-                    saveCookie(); // 保存 Cookie
-                    if ($('#identify').val() == "admin") {
-                        location.href = mainUrl; // 跳转到后台主页
-                    } else {
-                        location.href = doctorMainUrl; // 跳转到医生主页
-                    }
-                } else {
-                    $.messager.alert('登录失败！', data.msg, 'warning', function () {
-                        $('#password').select();
-                    });
-                }
-            },
-            error: function() {
-                $.messager.alert('错误', '请求失败，请重试！', 'error');
-            }
-        });
-    }
-}
-</script>
 
 </body>
 </html>

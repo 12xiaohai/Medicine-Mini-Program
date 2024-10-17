@@ -50,7 +50,7 @@ class FrontLoginOutView(APIView):
         return redirect(reverse("Index:index"))  # 重定向到首页
 
 
-class LoginView(View):
+class LoginView(APIView):
     """后台登录页面"""
 
     def get(self, request):
@@ -64,10 +64,10 @@ class LoginView(View):
         if identify == 'admin':
             try:
                 admin = Admin.objects.get(username=username)
-                # 直接比较明文密码
                 if password == admin.password:
                     request.session['username'] = username  # 存储用户名到 session
-                    data = {'msg': '登录成功', 'success': True}
+                    # 返回成功信息并重定向到管理员主页
+                    data = {'msg': '登录成功', 'success': True, 'redirect_url': reverse('Index:main')}
                 else:
                     data = {'msg': '登录失败：密码错误', 'success': False}
             except Admin.DoesNotExist:
@@ -75,9 +75,10 @@ class LoginView(View):
         else:  # 医生登录逻辑
             try:
                 doctor = Doctor.objects.get(doctorNumber=username)
-                if password == doctor.password:  # 直接比较明文密码
+                if password == doctor.password:
                     request.session['doctorNumber'] = username  # 存储医生编号到 session
-                    data = {'msg': '登录成功', 'success': True}
+                    # 返回成功信息并重定向到医生主页
+                    data = {'msg': '登录成功', 'success': True, 'redirect_url': reverse('Index:doctorMain')}
                 else:
                     data = {'msg': '登录失败：密码错误', 'success': False}
             except Doctor.DoesNotExist:
