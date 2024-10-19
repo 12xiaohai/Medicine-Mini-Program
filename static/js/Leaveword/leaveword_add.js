@@ -29,7 +29,7 @@ $(function () {
 			$(".messager-window").css("z-index",10000);
 		} else {
 			$("#leavewordAddForm").form({
-			    url:"/Leaveword/add",
+			    url:"/Leaveword/add/",
 				queryParams: {
 			    	"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 				},

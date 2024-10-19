@@ -3,50 +3,106 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>中医药小程序后台登陆</title>
+    <title>信息管理系统_用户登录</title>
 
     <!-- 引入静态资源 -->
     <link rel="stylesheet" type="text/css" href="{% static 'easyui/themes/default/easyui.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'easyui/themes/icon.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" /> <!-- 确保 CSS 文件的引用 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
 </head>
-<body>
+<body style="background: url('{% static 'images/background.png' %}') no-repeat center center fixed; background-size: cover;">
 
-<!-- 添加外部容器，用于包含图片和表单 -->
-<div class="login-container">
-    
-    <!-- 表单部分 -->
-    <div class="form-side">
-        <form id="loginForm" method="post" data-login-url="{% url 'Index:login' %}" data-main-url="{% url 'Index:main' %}" data-doctor-url="{% url 'Index:doctorMain' %}">
-            {% csrf_token %}
-            <h2>欢迎登录医院预约挂号系统</h2> <!-- 添加标题 -->
-            <p>登录帐号：<input type="text" id="manager" class="textbox" required></p>
-            <p>登录密码：<input type="password" id="password" class="textbox" required></p>
-            <p>身份：
-                <select name="identify" id="identify">
-                    <option value="doctor">医生</option>
-                    <option value="admin">超级管理员</option>
-                </select>
-            </p>
-            <p>
-                <label>
-                    <input id="saveid" type="checkbox" onclick="savePaw();" />
-                    记住账号
-                </label>
-            </p>
-            <div id="btn">
-                <a href="#" class="easyui-linkbutton" onclick="submitForm()">登录</a>
-            </div>
-        </form>
+    <div class="container">
+        <div class="login-box">
+            <h2>欢迎登录中医药馆后台管理系统</h2>
+            <form id="loginForm" method="post" data-login-url="{% url 'Index:login' %}" data-main-url="{% url 'Index:main' %}" data-doctor-url="{% url 'Index:doctorMain' %}">
+                {% csrf_token %}
+                <div class="textbox">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="manager" name="username" placeholder="请输入账号" class="textbox" required>
+                </div>
+                <div class="textbox">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" class="textbox" required>
+                </div>
+                <div class="textbox">
+                    <i class="fas fa-user-tag"></i>
+                    <select name="identify" id="identify" class="textbox" required>
+                        <option value="" disabled selected>请选择角色</option>
+                        <option value="doctor">医生</option>
+                        <option value="admin">超级管理员</option>
+                    </select>
+                </div>
+                <p>
+                    <input id="saveid" type="checkbox" onclick="savePaw();" /> 记住账号
+                </p>
+                <button type="submit" class="btn">登录</button>
+            </form>
+            <p>还没有账号？请 <a href="#">注册</a></p>
+        </div>
     </div>
-</div>
 
-<!-- 引入JS文件 -->
-<script type="text/javascript" src="{% static 'easyui/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'easyui/jquery.easyui.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'easyui/locale/easyui-lang-zh_CN.js' %}"></script>
-<script type="text/javascript" src="{% static 'easyui/jquery.cookie.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/login.js' %}"></script>
+    <!-- 引入JS文件 -->
+    <script type="text/javascript" src="{% static 'easyui/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'easyui/jquery.easyui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'easyui/locale/easyui-lang-zh_CN.js' %}"></script>
+    <script type="text/javascript" src="{% static 'easyui/jquery.cookie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
+
+    <script type="text/javascript">
+        function submitForm() {
+            var loginUrl = $('#loginForm').data('login-url');
+            var mainUrl = $('#loginForm').data('main-url');
+            var doctorMainUrl = $('#loginForm').data('doctor-url');
+        
+            if (!$('#manager').validatebox('isValid')) {
+                $('#manager').focus();
+            } else if (!$('#password').validatebox('isValid')) {
+                $('#password').focus();
+            } else {
+                var csrf = $('input[name="csrfmiddlewaretoken"]').val(); // 获取CSRF token
+                $.ajax({
+                    url: loginUrl,
+                    type: 'post',
+                    data: {
+                        "username": $('#manager').val(),
+                        "password": $('#password').val(),
+                        "identify": $('#identify').val(),
+                        "csrfmiddlewaretoken": csrf
+                    },
+                    dataType: "json",
+                    beforeSend: function () {
+                        $.messager.progress({
+                            text: '正在登录中...',
+                        });
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            // 打印 redirect_url 以确认其值
+                            console.log("重定向到: " + data.redirect_url);
+                            window.location.href = data.redirect_url; // 重定向到返回的 URL
+                        } else {
+                            $.messager.alert('登录失败！', data.msg, 'warning', function () {
+                                $('#password').select();
+                            });
+                        }
+                    },
+                    error: function() {
+                        $.messager.alert('错误', '请求失败，请重试！', 'error');
+                    }
+                });
+            }
+        }
+        
+        // 禁用表单的默认提交行为
+        $("#loginForm").on("submit", function(event) {
+            event.preventDefault(); // 阻止表单的默认提交行为
+            submitForm(); // 调用自定义的 AJAX 提交
+        });
+        
+        
+    </script>
 
 </body>
 </html>
