@@ -119,7 +119,7 @@
 /*弹出修改用户信息界面并初始化数据*/
  function ajaxModifyQuery(user_name) {
 	$.ajax({
-		url :  "/UserInfo/update/" + user_name,
+		url :  "/UserInfo/update/" + user_name + '/',
 		type : "get",
 		dataType: "json",
 		success : function (userInfo, response, status) {
@@ -145,7 +145,7 @@
 /*ajax方式提交用户信息信息表单给服务器端修改*/
 function ajaxUserInfoModify() {
 	$.ajax({
-		url :  "/UserInfo/update/" + $("#userInfo_user_name_edit").val(),
+		url :  "/UserInfo/update/" + $("#userInfo_user_name_edit").val() + '/',
 		type : "post",
 		dataType: "json",
 		data: new FormData($("#userInfoEditForm")[0]),

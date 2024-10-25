@@ -2,7 +2,7 @@ $(function () {
     setTimeout(ajaxModifyQuery,"100");
   function ajaxModifyQuery() {	
 	$.ajax({
-		url : "/UserInfo/update/" + $("#userInfo_user_name_modify").val(),
+		url : "/UserInfo/update/" + $("#userInfo_user_name_modify").val() + '/',
 		type : "get",
 		data : {
 			//user_name : $("#userInfo_user_name_modify").val(),
@@ -67,7 +67,7 @@ $(function () {
 	$("#userInfoModifyButton").click(function(){ 
 		if ($("#userInfoModifyForm").form("validate")) {
 			$("#userInfoModifyForm").form({
-			    url:"UserInfo/update/" + $("#userInfo_user_name_modify").val(),
+			    url:"UserInfo/update/" + $("#userInfo_user_name_modify").val() + '/',
 			    onSubmit: function(){
 					if($("#userInfoEditForm").form("validate"))  {
 	                	$.messager.progress({

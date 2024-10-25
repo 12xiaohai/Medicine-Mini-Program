@@ -100,7 +100,7 @@ $(function () {
 						$.messager.alert("错误提示","你输入的信息还有错误！","warning");
 					} else {
 						$("#userInfoEditForm").form({
-						    url:"/UserInfo/update/" + $("#userInfo_user_name_edit").val(),
+						    url:"/UserInfo/update/" + $("#userInfo_user_name_edit").val() + '/',
 						    onSubmit: function(){
 								if($("#userInfoEditForm").form("validate"))  {
 				                	$.messager.progress({
@@ -179,7 +179,7 @@ function initUserInfoManageTool() {
 						}
 						$.ajax({
 							type : "POST",
-							url : "/UserInfo/deletes",
+							url : "/UserInfo/deletes/",
 							data : {
 								user_names : user_names.join(","),
 								"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()

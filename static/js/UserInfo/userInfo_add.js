@@ -44,7 +44,7 @@ $(function () {
 			$(".messager-window").css("z-index",10000);
 		} else {
 			$("#userInfoAddForm").form({
-			    url:"/UserInfo/add",
+			    url:"/UserInfo/add/",
 				queryParams: {
 			    	"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
 				},

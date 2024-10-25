@@ -139,7 +139,7 @@ function initNoticeManageTool() {
 						}
 						$.ajax({
 							type : "POST",
-							url : "/Notice/deletes",
+							url : "/Notice/deletes/",
 							data : {
 								noticeIds : noticeIds.join(","),
 								"csrfmiddlewaretoken": $('input[name="csrfmiddlewaretoken"]').val()
