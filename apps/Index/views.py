@@ -13,41 +13,41 @@ from json import dumps
 
 class IndexView(APIView):
     def get(self, request):
-        """显示首页,使用模板"""
-        return render(request, 'index.html')
+        """显示首页, 未登录则重定向到登录页面"""
+        if not request.user.is_authenticated:
+            return redirect('login/')  # 假设'login'是登录视图的URL名称
+
+# class FrontLoginView(APIView):
+#     """前台登录"""
+
+#     def post(self, request):
+#         username = request.POST.get('userName')
+#         password = request.POST.get('password')
+
+#         try:
+#             # 根据用户名查询用户
+#             user = UserInfo.objects.get(user_name=username)
+
+#             # 明文比较输入的密码和数据库中的密码
+#             if password == user.password:
+#                 # 登录成功，将用户名存入 session
+#                 request.session['user_name'] = username  
+#                 data = {'msg': '登录成功', 'success': True}
+#             else:
+#                 data = {'msg': '登录失败：密码错误', 'success': False}
+#         except UserInfo.DoesNotExist:
+#             data = {'msg': '登录失败：用户不存在', 'success': False}
+
+#         # 返回 JSON 响应
+#         return HttpResponse(dumps(data, ensure_ascii=False))
 
 
-class FrontLoginView(APIView):
-    """前台登录"""
+# class FrontLoginOutView(APIView):
+#     """前台登出"""
 
-    def post(self, request):
-        username = request.POST.get('userName')
-        password = request.POST.get('password')
-
-        try:
-            # 根据用户名查询用户
-            user = UserInfo.objects.get(user_name=username)
-
-            # 明文比较输入的密码和数据库中的密码
-            if password == user.password:
-                # 登录成功，将用户名存入 session
-                request.session['user_name'] = username  
-                data = {'msg': '登录成功', 'success': True}
-            else:
-                data = {'msg': '登录失败：密码错误', 'success': False}
-        except UserInfo.DoesNotExist:
-            data = {'msg': '登录失败：用户不存在', 'success': False}
-
-        # 返回 JSON 响应
-        return HttpResponse(dumps(data, ensure_ascii=False))
-
-
-class FrontLoginOutView(APIView):
-    """前台登出"""
-
-    def get(self, request):
-        request.session.flush()  # 清空所有 session 数据
-        return redirect(reverse("Index:index"))  # 重定向到首页
+#     def get(self, request):
+#         request.session.flush()  # 清空所有 session 数据
+#         return redirect(reverse("Index:index"))  # 重定向到首页
 
 
 class LoginView(APIView):

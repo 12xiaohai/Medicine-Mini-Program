@@ -1,86 +1,115 @@
+/* 通用样式 */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background: url("{% static 'images/background.png' %}") no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    margin: 0;  /* 移除页面的默认边距 */
+    padding: 0;  /* 移除页面的默认填充 */
+    font-family: 'Arial', sans-serif;  /* 设置页面默认字体为Arial，无该字体时使用sans-serif */
+    background: url("{% static 'images/background.png' %}") no-repeat center center fixed;  
+    /* 设置页面背景图片，居中显示，且不随滚动条滚动 */
+    background-size: cover;  /* 背景图片填满整个页面 */
+    display: flex;  /* 使用Flexbox布局 */
+    justify-content: center;  /* 水平居中对齐 */
+    align-items: center;  /* 垂直居中对齐 */
+    height: 100vh;  /* 设置页面的高度为浏览器的视口高度，确保内容垂直居中 */
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
+    display: flex;  /* 采用Flexbox布局 */
+    justify-content: center;  /* 水平居中对齐 */
+    align-items: center;  /* 垂直居中对齐 */
+    height: 100%;  /* 设置容器高度为100%，占满父元素的高度 */
+    width: 100%;  /* 设置容器宽度为100%，占满父元素的宽度 */
 }
 
 .login-box {
-    background-color: white;
-    padding: 40px;
-    border-radius: 12px; /* 改进圆角 */
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); /* 加强阴影效果 */
-    text-align: center;
-    width: 400px; /* 调整宽度 */
-    height: auto;
+    background-color: white;  /* 背景颜色为白色 */
+    padding: 40px;  /* 内边距为40px，确保内容不会贴边 */
+    border-radius: 10px;  /* 设置圆角，圆滑的边框 */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);  /* 给容器添加阴影，增加立体感 */
+    text-align: center;  /* 文字内容居中对齐 */
+    width: 350px;  /* 设置容器宽度为350px */
+    height: auto;  /* 自动调整容器高度 */
+    overflow: hidden;  /* 隐藏超出容器的内容 */
 }
 
+/* 标题样式 */
 h2 {
-    margin-bottom: 25px;
-    font-size: 18px; /* 调整字体大小 */
-    color: #333;
+    margin-bottom: 20px;  /* 标题和下面内容之间留出20px的间距 */
+    font-size: 24px;  /* 标题字体大小设置为24px */
+    color: #333;  /* 标题颜色设置为深灰色 */
 }
 
+/* 输入框容器样式 */
 .textbox {
-    position: relative;
-    margin-bottom: 20px;
+    position: relative;  /* 使用相对定位，方便放置图标 */
+    margin-bottom: 30px;  /* 每个输入框和下一个元素之间留出30px的间距 */
 }
 
+/* 图标样式 */
+.textbox i {
+    position: absolute;  /* 图标使用绝对定位，固定在输入框内部 */
+    left: 10px;  /* 图标距离输入框左边缘10px */
+    top: 50%;  /* 图标垂直居中于输入框 */
+    transform: translateY(-50%);  /* 通过translateY来实现精确的垂直居中 */
+    color: #888;  /* 图标颜色设置为浅灰色 */
+    font-size: 1.2em;  /* 图标字体大小设置为1.2em（相对于父元素） */
+}
+
+/* 输入框与下拉菜单样式 */
 .textbox input, .textbox select {
-    width: 100%;
-    padding: 10px 12px; /* 调整内边距 */
-    border: 1px solid #ddd; /* 更柔和的边框颜色 */
-    border-radius: 5px; /* 调整边框圆角 */
-    font-size: 16px;
-    box-sizing: border-box;
-    height: 45px; /* 增加高度 */
-    transition: border-color 0.3s ease;
+    width: 100%;  /* 输入框和下拉菜单宽度占满父容器 */
+    padding: 10px 10px 10px 40px;  /* 四边的内边距，上下10px，右边10px，左边40px（为图标留出空间） */
+    border: 1px solid #ccc;  /* 设置边框为1px，颜色为浅灰色 */
+    border-radius: 5px;  /* 圆角边框，增强美观 */
+    font-size: 16px;  /* 设置字体大小为16px */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);  /* 给输入框添加微弱的阴影，提升视觉效果 */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;  /* 边框颜色和阴影在聚焦时过渡效果 */
 }
 
+/* 当输入框和下拉菜单被选中时的样式 */
 .textbox input:focus, .textbox select:focus {
-    outline: none;
-    border-color: #4CAF50;
+    outline: none;  /* 去掉默认的聚焦时的外边框 */
+    border-color: #4CAF50;  /* 当聚焦时，边框颜色变为绿色 */
+    box-shadow: 0px 0px 8px rgba(76, 175, 80, 0.5);  /* 聚焦时增加绿色阴影，视觉提示用户聚焦 */
 }
 
+/* 登录按钮样式 */
 .btn {
-    width: 100%;
-    padding: 12px 0; /* 设置按钮高度 */
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    width: 100%;  /* 按钮宽度占满父容器 */
+    padding: 12px;  /* 按钮的内边距，确保按钮内容垂直居中 */
+    background-color: #4CAF50;  /* 按钮背景颜色为绿色 */
+    border: none;  /* 去掉默认边框 */
+    border-radius: 5px;  /* 圆角按钮，增强美观 */
+    color: white;  /* 按钮文字颜色为白色 */
+    font-size: 18px;  /* 按钮文字大小设置为18px */
+    cursor: pointer;  /* 鼠标悬停时显示为手指形状 */
+    transition: background-color 0.3s ease;  /* 背景颜色在鼠标悬停时平滑过渡 */
 }
 
+/* 鼠标悬停在按钮上时的样式 */
 .btn:hover {
-    background-color: #45a049;
+    background-color: #45a049;  /* 鼠标悬停时，按钮背景颜色变为更深的绿色 */
 }
 
+/* 记住账号的复选框 */
 p {
-    margin-top: 20px;
-    color: #666;
+    margin-top: 10px;  /* 上方留出10px的间距 */
+    color: #333;  /* 文本颜色为深灰色 */
+    font-size: 14px;  /* 字体大小设置为14px */
 }
 
+/* 复选框与文字的距离 */
+p input[type="checkbox"] {
+    margin-right: 5px;  /* 复选框和文字之间留出5px的间距 */
+}
+
+/* 注册链接样式 */
 p a {
-    color: #4CAF50;
-    text-decoration: none;
+	float: auto;
+    color: #4CAF50;  /* 注册链接文字颜色为绿色 */
+    text-decoration: none;  /* 去掉默认的下划线 */
 }
 
-#saveid {
-    margin-right: 10px;
+/* 当鼠标悬停在注册链接上时的样式 */
+p a:hover {
+    text-decoration: underline;  /* 鼠标悬停时显示下划线 */
 }

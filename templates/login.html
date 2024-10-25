@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>信息管理系统_用户登录</title>
@@ -10,25 +10,28 @@
     <link rel="stylesheet" type="text/css" href="{% static 'easyui/themes/icon.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+
+    <!-- 引入 Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body style="background: url('{% static 'images/background.png' %}') no-repeat center center fixed; background-size: cover;">
 
     <div class="container">
         <div class="login-box">
-            <h2>欢迎登录中医药馆后台管理系统</h2>
+            <h2>欢迎登录中医药馆后台系统</h2>
             <form id="loginForm" method="post" data-login-url="{% url 'Index:login' %}" data-main-url="{% url 'Index:main' %}" data-doctor-url="{% url 'Index:doctorMain' %}">
                 {% csrf_token %}
                 <div class="textbox">
                     <i class="fas fa-user"></i>
-                    <input type="text" id="manager" name="username" placeholder="请输入账号" class="textbox" required>
+                    <input type="text" id="manager" name="username" placeholder="请输入账号" required>
                 </div>
                 <div class="textbox">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="password" name="password" placeholder="请输入密码" class="textbox" required>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" required>
                 </div>
                 <div class="textbox">
                     <i class="fas fa-user-tag"></i>
-                    <select name="identify" id="identify" class="textbox" required>
+                    <select name="identify" id="identify" required>
                         <option value="" disabled selected>请选择角色</option>
                         <option value="doctor">医生</option>
                         <option value="admin">超级管理员</option>
@@ -55,7 +58,7 @@
             var loginUrl = $('#loginForm').data('login-url');
             var mainUrl = $('#loginForm').data('main-url');
             var doctorMainUrl = $('#loginForm').data('doctor-url');
-        
+
             if (!$('#manager').validatebox('isValid')) {
                 $('#manager').focus();
             } else if (!$('#password').validatebox('isValid')) {
@@ -94,15 +97,12 @@
                 });
             }
         }
-        
+
         // 禁用表单的默认提交行为
         $("#loginForm").on("submit", function(event) {
             event.preventDefault(); // 阻止表单的默认提交行为
             submitForm(); // 调用自定义的 AJAX 提交
         });
-        
-        
     </script>
-
 </body>
 </html>
